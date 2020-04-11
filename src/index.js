@@ -22,13 +22,9 @@ const inputData = {
 //   severeImpact: {} // your severe case estimation
 // };
 
-
-let reportedCases;
-let totalHospitalBeds;
-
 function Estimator(data) {
   // challenge 1
-  reportedCases = data.reportedCases;
+  const reportedCases = data.reportedCases;
   const currentlyInfectedImpact = reportedCases * 10;
   const currentlyInfectedSevereImpact = reportedCases * 50;
   console.log('reportedCases: ', reportedCases);
@@ -56,7 +52,7 @@ function Estimator(data) {
   const severeCasesByRequestedTimeImpact = severeCasesByRequestedTimeFactor * infectionsByRequestedTimeImpact;
   const severeCasesByRequestedTimeSevereImpact = severeCasesByRequestedTimeFactor * infectionsByRequestedTimeSevereImpact;
 
-  totalHospitalBeds = data.totalHospitalBeds;
+  const totalHospitalBeds = data.totalHospitalBeds;
 
   console.log('severeCasesByRequestedTimeFactor: ', `${severeCasesByRequestedTimeFactor * 100}%`);
   console.log('severeCasesByRequestedTimeImpact: ', severeCasesByRequestedTimeImpact);
