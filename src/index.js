@@ -1,6 +1,6 @@
 console.log('COVID-19 Estimator App');
 
-export const inputData = {
+const inputData = {
     region: {
     name: "Africa",
     avgAge: 19.7,
@@ -14,7 +14,7 @@ export const inputData = {
     totalHospitalBeds: 1380614
    };
 
-export const outputData = {
+const outputData = {
     data: {}, // the input data you got
     impact: {}, // your best case estimation
     severeImpact: {} // your severe case estimation
@@ -23,7 +23,7 @@ export const outputData = {
 
 let reportedCases, currentlyInfected, infectionsByRequestedTime, severeCasesByRequestedTime, totalHospitalBeds;
 
-export function Estimator(data) {
+function Estimator(data) {
 
     //challenge 1
     reportedCases = data['reportedCases'];
