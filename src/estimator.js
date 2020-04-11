@@ -1,9 +1,5 @@
-const outputData = {
-    data: {}, // the input data you got
-    impact: {}, // your best case estimation
-    severeImpact: {} // your severe case estimation
-   };
+import { Estimator } from './index';
 
-const covid19ImpactEstimator = (inputData) => {inputData, outputData};
+const covid19ImpactEstimator = (inputData) => Estimator(inputData);
 
 export default covid19ImpactEstimator;
