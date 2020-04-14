@@ -17,10 +17,11 @@ const dbUrl = {
 if (process.env.USERNAME === 'ACER') {
   db = new Client(dbUrl);
 } else {
-  db = new Client({
-    connectionString: process.env.HEROKU_DB_URI,
-    ssl: true
-  });
+  // db = new Client({
+  //   connectionString: process.env.HEROKU_DB_URI,
+  //   ssl: true
+  // });
+  db = new Client(process.env.HEROKU_DB_URI);
 }
 
 db.connect((err, res) => {
