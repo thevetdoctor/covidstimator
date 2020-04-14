@@ -2,7 +2,7 @@
 /* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 const express = require('express');
-
+const {toXml, toJson} = require('json-xml');
 const router = express.Router();
 const { setupDB } = require('../db/migration.js');
 const data = require('../testing.js');
@@ -41,20 +41,21 @@ router.get('/api/v1/on-COVID-19', async (req, res) => {
   });
 });
 
-router.post('/api/v1/on-COVID-19', async (req, res) => {
-  console.log(req.body);
-  const {
-    name, avgAge, avgDailyIncomeInUSD, avgDailyIncomePopulation
-  } = data[0].region;
-  const {
-    reportedCases, population, totalHospitalBeds, timeToElapse, periodType
-  } = data[0];
-  const newEstimate = new Estimate(name, avgAge, avgDailyIncomeInUSD, avgDailyIncomePopulation, reportedCases, population, totalHospitalBeds, timeToElapse, periodType);
-  const savedEstimate = await newEstimate.save();
-  console.log(savedEstimate);
-
+router.post('/api/v1/on-COVID-19/:tag', async (req, res) => {
+    const { url, method, params } = req;
+    console.log(url, method, params);
+    const { name, avgAge, avgDailyIncomeInUSD, avgDailyIncomePopulation } = req.body['region'];
+    const { reportedCases, population, totalHospitalBeds, timeToElapse, periodType } = req.body;
+    const newEstimate = new Estimate(name, avgAge, avgDailyIncomeInUSD, avgDailyIncomePopulation, reportedCases, population, totalHospitalBeds, timeToElapse, periodType);
+    const savedEstimate = await newEstimate.save();
+    
+    const output = covid19ImpactEstimator(req.body);
+    const xml = toXml(output);
+    console.log(output, xml);
+    
   res.json({
     status: 200,
+    output,
     message: 'Welcome to COVID Estimator API Endpoint!'
   });
 });

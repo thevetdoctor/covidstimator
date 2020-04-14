@@ -14,15 +14,18 @@ const dbUrl = {
   port: process.env.DB_PORT
 };
 
-if (process.env.NODE_ENV === '') {
+if (process.env.USERNAME === ' ACER') {
   db = new Client(dbUrl);
 } else {
-  db = new Client(dbUrl);
+  db = new Client({
+    connectionString: process.env.HEROKU_DB_URI,
+    ssl: true,
+  });
 }
-
+ 
 db.connect((err, res) => {
   if (err) {
-    // console.log(err);
+    console.log(err);
     console.log(`Some error in connection to: ${process.env.DB_NAME} DB`);
     return;
   }
