@@ -43,6 +43,7 @@ router.get('/api/v1/on-COVID-19', async (req, res) => {
 
 router.post('/api/v1/on-COVID-19/:tag', async (req, res) => {
     const { url, method, params } = req;
+    const { tag } = req.params;
     console.log(url, method, params);
     const { name, avgAge, avgDailyIncomeInUSD, avgDailyIncomePopulation } = req.body['region'];
     const { reportedCases, population, totalHospitalBeds, timeToElapse, periodType } = req.body;
@@ -51,9 +52,12 @@ router.post('/api/v1/on-COVID-19/:tag', async (req, res) => {
     
     const output = covid19ImpactEstimator(req.body);
     const xml = toXml(output);
-    console.log(output, xml);
+    // console.log(output, xml);
     
-  res.json({
+    if (tag === 'xml') {
+        return { xml };
+    }
+  return res.json({
     status: 200,
     output,
     message: 'Welcome to COVID Estimator API Endpoint!'
