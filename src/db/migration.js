@@ -1,4 +1,6 @@
-const db = require('./index.js'); 
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
+const db = require('./index.js');
 
 const estimateTable = `create table if not exists
                                 estimates (id serial primary key,
@@ -31,20 +33,14 @@ const dropQuery = 'DROP TABLE IF EXISTS estimates';
 const dropTables = async () => {
   const res = await db.query(dropQuery)
     .then((result) => {
-      console.log('Tables dropped')
+      console.log('Tables dropped');
     })
     .catch((err) => console.log(err));
   return res;
 };
 
-// const dropDBQuery = 'DROP DATABASE covid'; 
-// const createDBQuery = 'CREATE DATABASE IF NOT EXISTS covid';
-// const createUserQuery = 'CREATE USER testuser WITH PASSWORD \'testpass\'';
-
 const setupDB = async () => {
   try {
-    // const dropDBResponse = await db.query(dropDBQuery);
-    // const createDBResponse = await db.query(createDBQuery);
     const drop = await dropTables();
     const create = await createTables();
   } catch (err) {

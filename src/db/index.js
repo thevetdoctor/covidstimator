@@ -1,4 +1,5 @@
-const { Pool, Client } = require('pg');
+/* eslint-disable no-console */
+const { Client } = require('pg');
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -6,19 +7,17 @@ dotenv.config();
 let db;
 
 const dbUrl = {
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    database: process.env.DB_NAME,
-    password: process.env.DB_PASS,
-    port: process.env.DB_PORT,
-  };
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASS,
+  port: process.env.DB_PORT
+};
 
 if (process.env.NODE_ENV === '') {
   db = new Client(dbUrl);
-
 } else {
   db = new Client(dbUrl);
-
 }
 
 db.connect((err, res) => {
@@ -28,6 +27,6 @@ db.connect((err, res) => {
     return;
   }
   console.log('Connected to', res.database);
-}); 
- 
+});
+
 module.exports = db;

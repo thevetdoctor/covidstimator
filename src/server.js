@@ -1,7 +1,8 @@
+/* eslint-disable no-console */
 const express = require('express');
 const parser = require('body-parser');
 const cors = require('cors');
-const dotenv = require('dotenv'); 
+const dotenv = require('dotenv');
 
 dotenv.config();
 
@@ -18,8 +19,8 @@ app.use('/', router);
 
 
 app.listen(port, () => {
-    console.log(`Server started on ${port}`);
-})
+  console.log(`Server started on ${port}`);
+});
 
 
 module.exports = app;
