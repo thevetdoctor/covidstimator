@@ -39,4 +39,6 @@ const data = [
     timeToElapse: 20,
     periodType: 'days'
   }];
-console.log(data);
+// console.log(data);
+
+module.exports = data;

@@ -91,8 +91,8 @@ const covid19ImpactEstimator = (data) => {
     estimate
   };
 
-  console.log('output: ', output);
+  // console.log('output: ', output);
   return output;
 };
 
-export default covid19ImpactEstimator;
+module.exports = covid19ImpactEstimator;
