@@ -26,7 +26,7 @@ router.get('/setup', (req, res) => {
   });
 });
 
-router.get('/api/v1/on-COVID-19', async (req, res) => {
+router.get('/api/v1/on-covid-19', async (req, res) => {
   console.log('Welcome to COVID Estimator API Endpint!');
   console.log('user', process.env.USERNAME);
   // const result = data.map(x => covid19ImpactEstimator(x));
@@ -41,7 +41,24 @@ router.get('/api/v1/on-COVID-19', async (req, res) => {
   });
 });
 
-router.post('/api/v1/on-COVID-19/:tag', async (req, res) => {
+router.post('/api/v1/on-covid-19/', async (req, res) => {
+    const { url, method } = req;
+    console.log(url, method);
+    const { name, avgAge, avgDailyIncomeInUSD, avgDailyIncomePopulation } = req.body['region'];
+    const { reportedCases, population, totalHospitalBeds, timeToElapse, periodType } = req.body;
+    const newEstimate = new Estimate(name, avgAge, avgDailyIncomeInUSD, avgDailyIncomePopulation, reportedCases, population, totalHospitalBeds, timeToElapse, periodType);
+    const savedEstimate = await newEstimate.save();
+    
+    const output = covid19ImpactEstimator(req.body);
+    
+  return res.json({
+    status: 200,
+    output,
+    message: 'Welcome to COVID Estimator API Endpoint!'
+  });
+});
+
+router.post('/api/v1/on-covid-19/:tag', async (req, res) => {
     const { url, method, params } = req;
     const { tag } = req.params;
     console.log(url, method, params);
@@ -52,14 +69,11 @@ router.post('/api/v1/on-COVID-19/:tag', async (req, res) => {
     
     const output = covid19ImpactEstimator(req.body);
     const xml = toXml(output);
-    // console.log(output, xml);
+    console.log(xml);
     
-    if (tag === 'xml') {
-        return { xml };
-    }
   return res.json({
     status: 200,
-    output,
+    xml,
     message: 'Welcome to COVID Estimator API Endpoint!'
   });
 });

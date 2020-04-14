@@ -12,9 +12,9 @@ const dbUrl = {
   database: process.env.DB_NAME,
   password: process.env.DB_PASS,
   port: process.env.DB_PORT
-};
+}; 
 
-if (process.env.USERNAME === 'ACER') {
+if (process.env.USERNAME === ' ACER') {
   db = new Client(dbUrl);
 } else {
   db = new Client({
