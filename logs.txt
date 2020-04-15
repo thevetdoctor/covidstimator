@@ -1,2 +1,4 @@
-GET		/api/v1/on-covid-19/		200		20809 ms
-GET		/setup		200		28380 ms
+GET		/api/v1/on-covid-19/		200		$4225 ms
+POST		/api/v1/on-covid-19/xml		200		150077 ms
+POST		/api/v1/on-covid-19/		200		200380 ms
+POST		/api/v1/on-covid-19/		200		15309 ms

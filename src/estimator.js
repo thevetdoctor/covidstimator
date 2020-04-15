@@ -55,25 +55,24 @@ const covid19ImpactEstimator = (data) => {
   const dollarsInFlightImpact = Math.floor((infectionsByRequestedTimeImpact * avgDailyIncomePopulation * avgDailyIncomeInUSD) / requestedTime);
   const dollarsInFlightSevereImpact = Math.floor((infectionsByRequestedTimeSevereImpact * avgDailyIncomePopulation * avgDailyIncomeInUSD) / requestedTime);
 
-  const estimate = {
-    impact: {
-      currentlyInfected: currentlyInfectedImpact,
-      infectionsByRequestedTime: infectionsByRequestedTimeImpact,
-      severeCasesByRequestedTime: severeCasesByRequestedTimeImpact,
-      hospitalBedsByRequestedTime: hospitalBedsByRequestedTimeImpact,
-      casesForICUByRequestedTime: casesForICUByRequestedTimeImpact,
-      casesForVentilatorsByRequestedTime: casesForVentilatorsByRequestedTimeImpact,
-      dollarsInFlight: dollarsInFlightImpact
-    },
-    severeImpact: {
-      currentlyInfected: currentlyInfectedSevereImpact,
-      infectionsByRequestedTime: infectionsByRequestedTimeSevereImpact,
-      severeCasesByRequestedTime: severeCasesByRequestedTimeSevereImpact,
-      hospitalBedsByRequestedTime: hospitalBedsByRequestedTimeSevereImpact,
-      casesForICUByRequestedTime: casesForICUByRequestedTimeSevereImpact,
-      casesForVentilatorsByRequestedTime: casesForVentilatorsByRequestedTimeSevereImpact,
-      dollarsInFlight: dollarsInFlightSevereImpact
-    }
+  const impact = {
+    currentlyInfected: currentlyInfectedImpact,
+    infectionsByRequestedTime: infectionsByRequestedTimeImpact,
+    severeCasesByRequestedTime: severeCasesByRequestedTimeImpact,
+    hospitalBedsByRequestedTime: hospitalBedsByRequestedTimeImpact,
+    casesForICUByRequestedTime: casesForICUByRequestedTimeImpact,
+    casesForVentilatorsByRequestedTime: casesForVentilatorsByRequestedTimeImpact,
+    dollarsInFlight: dollarsInFlightImpact
+  };
+  const severeImpact = {
+    currentlyInfected: currentlyInfectedSevereImpact,
+    infectionsByRequestedTime: infectionsByRequestedTimeSevereImpact,
+    severeCasesByRequestedTime: severeCasesByRequestedTimeSevereImpact,
+    hospitalBedsByRequestedTime: hospitalBedsByRequestedTimeSevereImpact,
+    casesForICUByRequestedTime: casesForICUByRequestedTimeSevereImpact,
+    casesForVentilatorsByRequestedTime: casesForVentilatorsByRequestedTimeSevereImpact,
+    dollarsInFlight: dollarsInFlightSevereImpact
+  };
 
   // const estimate = {
   //   impact: {
@@ -84,11 +83,12 @@ const covid19ImpactEstimator = (data) => {
   //     currentlyInfected: currentlyInfectedSevereImpact,
   //     infectionsByRequestedTime: infectionsByRequestedTimeSevereImpact
   //   }
-  };
+  // };
 
   const output = {
     data,
-    estimate
+    impact,
+    severeImpact
   };
 
   // console.log('output: ', output);
