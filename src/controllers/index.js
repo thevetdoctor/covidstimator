@@ -11,10 +11,10 @@ const { setupDB } = require('../db/migration.js');
 
 const start = new Date();
 
-const getTime = (url, method) => {
+const getTime = (url, method, status = 200) => {
   const timeTaken = new Date() - start;
   console.log('Request took:', timeTaken, 'ms');
-  const logMsg = `${method}\t\t${url}\t\t200\t\t${timeTaken} ms\n`;
+  const logMsg = `${method}\t\t${url}\t\t${status}\t\t${timeTaken} ms\n`;
 
   try {
     const data = fs.writeFile('./logs.txt', logMsg, { flag: 'a+' }, (err) => {});
@@ -33,6 +33,7 @@ const EstimateCtrl = {
 
     res.json({
       status: 200,
+      count: result.length,
       result,
       message: 'Welcome to COVID Estimator API Endpoint!'
     });
@@ -76,11 +77,20 @@ const EstimateCtrl = {
     const output = covid19ImpactEstimator(req.body);
     const xmlOutput = toXml(output);
 
-    getTime(url, method);
-
-    res.format({
+    // getTime(url, method);
+    if (tag === 'xml') {
+      getTime(url, method,);
+      return res.format({
       'application/xml': () => res.send(xmlOutput)
     });
+    } else if (tag === 'json') {
+      getTime(url, method);
+      return res.format({
+        'application/json': () => res.send(output)
+      });
+    }
+    getTime(url, method, 404);
+    return res.send('Only json and xml response formats are allowed!');
   },
 
   getLogs: (req, res) => {
