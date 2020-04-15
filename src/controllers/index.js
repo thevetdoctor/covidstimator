@@ -11,25 +11,26 @@ const { setupDB } = require('../db/migration.js');
 
 const start = new Date();
 
+const getTime = (url, method) => {
+  const timeTaken = new Date() - start;
+  console.log('Request took:', timeTaken, 'ms');
+  const logMsg = `${method}\t\t${url}\t\t200\t\t${timeTaken} ms\n`;
+
+  try {
+    const data = fs.writeFile('./logs.txt', logMsg, { flag: 'a+' }, (err) => {});
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const EstimateCtrl = {
   getAll: (req, res) => {
     const { url, method } = req;
-    console.log(url, method);
     console.log('Welcome to COVID Estimator API Endpint!');
-    console.log('user', process.env.USERNAME);
-    console.log('NODE_ENV :', process.env.NODE_ENV);
 
     const result = Estimate.list();
+    getTime(url, method);
 
-    const timeTaken = new Date() - start;
-    console.log('Request took:', timeTaken, 'ms');
-    const logMsg = `${method}\t\t${url}\t\t200\t\t$${timeTaken} ms\n`;
-
-    try {
-      const data = fs.writeFile('./logs.txt', logMsg, { flag: 'a+' }, (err) => {});
-    } catch (err) {
-      console.log(err);
-    }
     res.json({
       status: 200,
       result,
@@ -37,7 +38,7 @@ const EstimateCtrl = {
     });
   },
 
-  addRecord: async (req, res) => {
+  addRecord: (req, res) => {
     const { url, method } = req;
     console.log(url, method);
     const {
@@ -47,18 +48,11 @@ const EstimateCtrl = {
       reportedCases, population, totalHospitalBeds, timeToElapse, periodType
     } = req.body;
     const newEstimate = new Estimate(name, avgAge, avgDailyIncomeInUSD, avgDailyIncomePopulation, reportedCases, population, totalHospitalBeds, timeToElapse, periodType);
-    const savedEstimate = await newEstimate.save();
+    const savedEstimate = newEstimate.save();
 
     const output = covid19ImpactEstimator(req.body);
-    const timeTaken = new Date() - start;
-    console.log('Request took:', timeTaken, 'ms');
-    const logMsg = `${method}\t\t${url}\t\t200\t\t${timeTaken} ms\n`;
+    getTime(url, method);
 
-    try {
-      const data = fs.writeFile('./logs.txt', logMsg, { flag: 'a+' }, (err) => {});
-    } catch (err) {
-      console.log(err);
-    }
     return res.json({
       status: 200,
       output,
@@ -66,7 +60,7 @@ const EstimateCtrl = {
     });
   },
 
-  addRecordXML: async (req, res) => {
+  addRecordXML: (req, res) => {
     const { url, method, params } = req;
     const { tag } = req.params;
     console.log(url, method, params);
@@ -77,20 +71,12 @@ const EstimateCtrl = {
       reportedCases, population, totalHospitalBeds, timeToElapse, periodType
     } = req.body;
     const newEstimate = new Estimate(name, avgAge, avgDailyIncomeInUSD, avgDailyIncomePopulation, reportedCases, population, totalHospitalBeds, timeToElapse, periodType);
-    const savedEstimate = await newEstimate.save();
+    const savedEstimate = newEstimate.save();
 
     const output = covid19ImpactEstimator(req.body);
     const xmlOutput = toXml(output);
 
-    const timeTaken = new Date() - start;
-    console.log('Request took:', timeTaken, 'ms');
-    const logMsg = `${method}\t\t${url}\t\t200\t\t${timeTaken} ms\n`;
-
-    try {
-      const data = fs.writeFile('./logs.txt', logMsg, { flag: 'a+' }, (err) => {});
-    } catch (err) {
-      console.log(err);
-    }
+    getTime(url, method);
 
     res.format({
       'application/xml': () => res.send(xmlOutput)
@@ -106,7 +92,6 @@ const EstimateCtrl = {
     };
     res.sendFile('logs.txt', options, (err) => {
       if (err) {
-        // console.log(err);
         res.json({
           status: 404,
           message: 'File not available yet!'
@@ -119,18 +104,10 @@ const EstimateCtrl = {
 
   setUp: (req, res) => {
     const { url, method } = req;
-    console.log(url, method);
     setupDB().then((a) => console.log('Test DB setup'));
 
-    const timeTaken = new Date() - start;
-    console.log('Request took:', timeTaken, 'ms');
-    const logMsg = `${method}\t\t${url}\t\t200\t\t${timeTaken} ms\n`;
+    getTime(url, method);
 
-    try {
-      const data = fs.writeFile('./logs.txt', logMsg, { flag: 'a+' }, (err) => {});
-    } catch (err) {
-      console.log(err);
-    }
     res.json({
       status: 200,
       message: 'Database setup!'
@@ -139,18 +116,9 @@ const EstimateCtrl = {
 
   getHome: (req, res) => {
     const { url, method } = req;
-    console.log(url, method);
-    console.log('Welcome to COVID Estimator App!');
 
-    const timeTaken = new Date() - start;
-    console.log('Request took:', timeTaken, 'ms');
-    const logMsg = `${method}\t\t${url}\t\t200\t\t${timeTaken} ms\n`;
+    getTime(url, method);
 
-    try {
-      const data = fs.writeFile('./logs.txt', logMsg, { flag: 'a+' }, (err) => {});
-    } catch (err) {
-      console.log(err);
-    }
     res.json({
       status: 200,
       message: 'Welcome to COVID Estimator App!'

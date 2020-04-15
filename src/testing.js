@@ -39,6 +39,6 @@ const data = [
     timeToElapse: 20,
     periodType: 'days'
   }];
-// console.log(data);
+// console.log(covid19ImpactEstimator(data[0]));
 
 module.exports = data;
