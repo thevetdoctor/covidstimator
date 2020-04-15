@@ -12,6 +12,7 @@ const { setupDB } = require('../db/migration.js');
 const start = new Date();
 
 const getTime = (url, method, status = 200) => {
+  console.log(url, method);
   const timeTaken = new Date() - start;
   console.log('Request took:', timeTaken, 'ms');
   const logMsg = `${method}\t\t${url}\t\t${status}\t\t${timeTaken} ms\n`;
@@ -26,7 +27,7 @@ const getTime = (url, method, status = 200) => {
 const EstimateCtrl = {
   getAll: async (req, res) => {
     const { url, method } = req;
-    console.log('Welcome to COVID Estimator API Endpint!');
+    console.log('Welcome to COVID Estimator API Endpoint!');
 
     const result = await Estimate.list();
     getTime(url, method);
@@ -95,6 +96,8 @@ const EstimateCtrl = {
   },
 
   getLogs: (req, res) => {
+    const { url, method } = req; 
+    console.log(url, method);
     let rooturl = __dirname.replace('\\src\\controllers', '');
     if (process.env.NODE_ENV === 'production') {
       rooturl = '/app';
