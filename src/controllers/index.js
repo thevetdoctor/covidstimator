@@ -102,13 +102,13 @@ const EstimateCtrl = {
     };
     res.sendFile('logs.txt', options, (err) => {
       if (err) {
-        console.log(options.root);
+        console.log(options.root.replace('\\src\\controllers', ''));
         res.json({
           status: 404,
           message: 'File not available yet!'
         });
       } else {
-        console.log(options.root);
+        console.log(options.root.replace('\\src\\controllers', ''));
         console.log('File rendered!');
       }
     });
