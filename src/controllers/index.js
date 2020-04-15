@@ -94,8 +94,9 @@ const EstimateCtrl = {
   },
 
   getLogs: (req, res) => {
+    let = rooturl = __dirname.replace('\\src\\controllers', '');
     const options = {
-      root: __dirname.replace('\\src\\controller', ''),
+      root: rooturl,
       headers: {
         'Content-Type': 'text/plain'
       }
