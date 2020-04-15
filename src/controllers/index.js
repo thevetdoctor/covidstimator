@@ -94,7 +94,8 @@ const EstimateCtrl = {
   },
 
   getLogs: (req, res) => {
-    let = rooturl = __dirname.replace('\\src\\controllers', '');
+    let rooturl = __dirname.replace('\\src\\controllers', '');
+    if (process.env.NODE_ENV === 'production') {rooturl = '/app'}
     const options = {
       root: rooturl,
       headers: {
@@ -103,7 +104,7 @@ const EstimateCtrl = {
     };
     res.sendFile('logs.txt', options, (err) => {
       if (err) {
-        console.log(options.root, __dirname);
+        console.log(options.root);
         console.log('File not available yet!');
         res.json({
           status: 404,
