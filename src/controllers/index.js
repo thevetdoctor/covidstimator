@@ -95,20 +95,21 @@ const EstimateCtrl = {
 
   getLogs: (req, res) => {
     const options = {
-      root: __dirname.replace('\\src\\controllers', ''),
+      root: __dirname.replace('\\src\\controller', ''),
       headers: {
         'Content-Type': 'text/plain'
       }
     };
     res.sendFile('logs.txt', options, (err) => {
       if (err) {
-        console.log(options.root.replace('\\src\\controllers', ''));
+        console.log(options.root, __dirname);
+        console.log('File not available yet!');
         res.json({
           status: 404,
           message: 'File not available yet!'
         });
       } else {
-        console.log(options.root.replace('\\src\\controllers', ''));
+        console.log(options.root);
         console.log('File rendered!');
       }
     });
