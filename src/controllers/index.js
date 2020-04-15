@@ -24,11 +24,11 @@ const getTime = (url, method) => {
 };
 
 const EstimateCtrl = {
-  getAll: (req, res) => {
+  getAll: async (req, res) => {
     const { url, method } = req;
     console.log('Welcome to COVID Estimator API Endpint!');
 
-    const result = Estimate.list();
+    const result = await Estimate.list();
     getTime(url, method);
 
     res.json({
@@ -38,7 +38,7 @@ const EstimateCtrl = {
     });
   },
 
-  addRecord: (req, res) => {
+  addRecord: async (req, res) => {
     const { url, method } = req;
     console.log(url, method);
     const {
@@ -48,7 +48,7 @@ const EstimateCtrl = {
       reportedCases, population, totalHospitalBeds, timeToElapse, periodType
     } = req.body;
     const newEstimate = new Estimate(name, avgAge, avgDailyIncomeInUSD, avgDailyIncomePopulation, reportedCases, population, totalHospitalBeds, timeToElapse, periodType);
-    const savedEstimate = newEstimate.save();
+    const savedEstimate = await newEstimate.save();
 
     const output = covid19ImpactEstimator(req.body);
     getTime(url, method);
@@ -60,7 +60,7 @@ const EstimateCtrl = {
     });
   },
 
-  addRecordXML: (req, res) => {
+  addRecordXML: async (req, res) => {
     const { url, method, params } = req;
     const { tag } = req.params;
     console.log(url, method, params);
@@ -71,7 +71,7 @@ const EstimateCtrl = {
       reportedCases, population, totalHospitalBeds, timeToElapse, periodType
     } = req.body;
     const newEstimate = new Estimate(name, avgAge, avgDailyIncomeInUSD, avgDailyIncomePopulation, reportedCases, population, totalHospitalBeds, timeToElapse, periodType);
-    const savedEstimate = newEstimate.save();
+    const savedEstimate = await newEstimate.save();
 
     const output = covid19ImpactEstimator(req.body);
     const xmlOutput = toXml(output);
@@ -92,11 +92,13 @@ const EstimateCtrl = {
     };
     res.sendFile('logs.txt', options, (err) => {
       if (err) {
+        console.log(options.root);
         res.json({
           status: 404,
           message: 'File not available yet!'
         });
       } else {
+        console.log(options.root);
         console.log('File rendered!');
       }
     });
