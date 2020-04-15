@@ -96,7 +96,7 @@ const EstimateCtrl = {
   },
 
   getLogs: (req, res) => {
-    const { url, method } = req; 
+    const { url, method } = req;
     console.log(url, method);
     let rooturl = __dirname.replace('\\src\\controllers', '');
     if (process.env.NODE_ENV === 'production') {
