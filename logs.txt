@@ -1,0 +1,5 @@
+GET		/api/v1/on-covid-19/		200		223224 ms
+GET		/api/v1/on-covid-19/		200		235285 ms
+POST		/api/v1/on-covid-19		200		254393 ms
+POST		/api/v1/on-covid-19		200		816996 ms
+GET		/api/v1/on-covid-19		200		903698 ms

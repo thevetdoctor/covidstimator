@@ -2,6 +2,7 @@
 /* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 const express = require('express');
+const path = require('path');
 const { toXml, toJson } = require('json-xml');
 const fs = require('fs');
 
@@ -33,18 +34,22 @@ router.get('/', (req, res) => {
 });
 
 router.get('/api/v1/on-covid-19/logs', (req, res) => {
-  let d;
-  fs.readFile('./logs.txt', 'utf-8', (err, data) => {
-    if (err) {
-      console.error(err);
-      return;
+  const options = {
+    root: __dirname.replace('\\src\\routes', ''),
+    headers: {
+      'Content-Type': 'text/plain'
     }
-    d = data;
-    console.log(d);
-  });
-  res.json({
-    status: 200,
-    d
+  };
+  res.sendFile('logs.txt', options, (err) => {
+    if (err) {
+      console.log(err);
+      res.json({
+        status: 404,
+        message: 'File not available yet!'
+      });
+    } else {
+      console.log('File rendered!');
+    }
   });
 });
 
