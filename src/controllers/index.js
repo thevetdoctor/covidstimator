@@ -35,7 +35,7 @@ const EstimateCtrl = {
       status: 200,
       count: result.length,
       result,
-      message: 'Welcome to COVID Estimator API Endpoint!'
+      message: 'Welcome to COVID Estimator API Endpoint!',
     });
   },
 
@@ -43,10 +43,10 @@ const EstimateCtrl = {
     const { url, method } = req;
     console.log(url, method);
     const {
-      name, avgAge, avgDailyIncomeInUSD, avgDailyIncomePopulation
+      name, avgAge, avgDailyIncomeInUSD, avgDailyIncomePopulation,
     } = req.body.region;
     const {
-      reportedCases, population, totalHospitalBeds, timeToElapse, periodType
+      reportedCases, population, totalHospitalBeds, timeToElapse, periodType,
     } = req.body;
     const newEstimate = new Estimate(name, avgAge, avgDailyIncomeInUSD, avgDailyIncomePopulation, reportedCases, population, totalHospitalBeds, timeToElapse, periodType);
     const savedEstimate = await newEstimate.save();
@@ -57,7 +57,7 @@ const EstimateCtrl = {
     return res.json({
       status: 200,
       output,
-      message: 'Welcome to COVID Estimator API Endpoint!'
+      message: 'Welcome to COVID Estimator API Endpoint!',
     });
   },
 
@@ -66,10 +66,10 @@ const EstimateCtrl = {
     const { tag } = req.params;
     console.log(url, method, params);
     const {
-      name, avgAge, avgDailyIncomeInUSD, avgDailyIncomePopulation
+      name, avgAge, avgDailyIncomeInUSD, avgDailyIncomePopulation,
     } = req.body.region;
     const {
-      reportedCases, population, totalHospitalBeds, timeToElapse, periodType
+      reportedCases, population, totalHospitalBeds, timeToElapse, periodType,
     } = req.body;
     const newEstimate = new Estimate(name, avgAge, avgDailyIncomeInUSD, avgDailyIncomePopulation, reportedCases, population, totalHospitalBeds, timeToElapse, periodType);
     const savedEstimate = await newEstimate.save();
@@ -79,14 +79,15 @@ const EstimateCtrl = {
 
     // getTime(url, method);
     if (tag === 'xml') {
-      getTime(url, method,);
-      return res.format({
-      'application/xml': () => res.send(xmlOutput)
-    });
-    } else if (tag === 'json') {
       getTime(url, method);
       return res.format({
-        'application/json': () => res.send(output)
+        'application/xml': () => res.send(xmlOutput),
+      });
+    }
+    if (tag === 'json') {
+      getTime(url, method);
+      return res.format({
+        'application/json': () => res.send(output),
       });
     }
     getTime(url, method, 404);
@@ -95,12 +96,14 @@ const EstimateCtrl = {
 
   getLogs: (req, res) => {
     let rooturl = __dirname.replace('\\src\\controllers', '');
-    if (process.env.NODE_ENV === 'production') {rooturl = '/app'}
+    if (process.env.NODE_ENV === 'production') {
+      rooturl = '/app';
+    }
     const options = {
       root: rooturl,
       headers: {
-        'Content-Type': 'text/plain'
-      }
+        'Content-Type': 'text/plain',
+      },
     };
     res.sendFile('logs.txt', options, (err) => {
       if (err) {
@@ -108,7 +111,7 @@ const EstimateCtrl = {
         console.log('File not available yet!');
         res.json({
           status: 404,
-          message: 'File not available yet!'
+          message: 'File not available yet!',
         });
       } else {
         console.log(options.root);
@@ -125,7 +128,7 @@ const EstimateCtrl = {
 
     res.json({
       status: 200,
-      message: 'Database setup!'
+      message: 'Database setup!',
     });
   },
 
@@ -136,9 +139,9 @@ const EstimateCtrl = {
 
     res.json({
       status: 200,
-      message: 'Welcome to COVID Estimator App!'
+      message: 'Welcome to COVID Estimator App!',
     });
-  }
+  },
 };
 
 module.exports = EstimateCtrl;

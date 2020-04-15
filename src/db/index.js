@@ -16,8 +16,7 @@ const dbUrl = {
 
 if (process.env.USERNAME === 'ACER') {
   db = new Client(dbUrl);
-}
- else {
+} else {
   // db = new Client({
   //   connectionString: process.env.HEROKU_DB_URI,
   //   ssl: true
