@@ -9,13 +9,14 @@ const Estimate = require('../models/index.js');
 const covid19ImpactEstimator = require('../estimator.js');
 const { setupDB } = require('../db/migration.js');
 
-const start = new Date();
+let start = Date.now();
 
 const getTime = (url, method, status = 200) => {
   console.log(url, method);
-  const timeTaken = new Date() - start;
+  const timeTaken = (Date.now() - start)/1000;
   console.log('Request took:', timeTaken, 'ms');
-  const logMsg = `${method}\t\t${url}\t\t${status}\t\t${timeTaken} ms\n`;
+  // const logMsg = `${method}\t\t${url}\t\t${status}\t\t${timeTaken} ms\n`;
+  const logMsg = `${Date.now()}\t\t${method}\t\t${url}\t\tdone in ${timeTaken} seconds\n`;
 
   try {
     const data = fs.writeFile('./logs.txt', logMsg, { flag: 'a+' }, (err) => {});

@@ -38,7 +38,7 @@ const data = [
     totalHospitalBeds: 205838,
     timeToElapse: 20,
     periodType: 'days',
-  }];
+  }]; 
 // console.log(covid19ImpactEstimator(data[0]));
 
 module.exports = data;
