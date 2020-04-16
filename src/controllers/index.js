@@ -9,11 +9,11 @@ const Estimate = require('../models/index.js');
 const covid19ImpactEstimator = require('../estimator.js');
 const { setupDB } = require('../db/migration.js');
 
-let start = Date.now();
+const start = Date.now();
 
 const getTime = (url, method, status = 200) => {
   console.log(url, method);
-  const timeTaken = (Date.now() - start)/1000;
+  const timeTaken = (Date.now() - start) / 1000;
   console.log('Request took:', timeTaken, 'ms');
   // const logMsg = `${method}\t\t${url}\t\t${status}\t\t${timeTaken} ms\n`;
   const logMsg = `${Date.now()}\t\t${method}\t\t${url}\t\tdone in ${timeTaken} seconds\n`;

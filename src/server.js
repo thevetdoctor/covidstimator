@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
 const express = require('express');
 const parser = require('body-parser');
 const cors = require('cors');
@@ -18,8 +19,8 @@ app.use(parser.urlencoded({ extended: false }));
 app.use('/', router);
 
 app.use((err, req, res, next) => {
-  console.error(err.stack)
-  res.status(500).send('Something broke!')
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
 });
 
 app.listen(port, () => {
