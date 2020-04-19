@@ -5,18 +5,18 @@
 /* eslint-disable no-unused-vars */
 const { toXml, toJson } = require('json-xml');
 const fs = require('fs');
+const path = require('path');
 const Estimate = require('../models/index.js');
 const covid19ImpactEstimator = require('../estimator.js');
 const { setupDB } = require('../db/migration.js');
 
 const start = Date.now();
 
-const getTime = (url, method, status = 200) => {
-  console.log(url, method);
-  const timeTaken = (Date.now() - start) / 1000;
-  console.log('Request took:', timeTaken, 'ms');
-  // const logMsg = `${method}\t\t${url}\t\t${status}\t\t${timeTaken} ms\n`;
-  const logMsg = `${Date.now()}\t\t${method}\t\t${url}\t\tdone in ${timeTaken} seconds\n`;
+const getTime = (method, url, status = 200) => {
+  console.log(method, url, url.length);
+  const timeTaken = (Date.now() - start);
+  console.log('Request took:', timeTaken, 'seconds');
+  const logMsg = url.length <= 23 ? `${Date.now()}\t\t${method}\t\t${url}\t\t${status}\t\tdone in ${timeTaken} seconds\n` : `${Date.now()}\t\t${method}\t\t${url}\t${status}\t\tdone in ${timeTaken} seconds\n`;
 
   try {
     const data = fs.writeFile('./logs.txt', logMsg, { flag: 'a+' }, (err) => {});
@@ -27,23 +27,21 @@ const getTime = (url, method, status = 200) => {
 
 const EstimateCtrl = {
   getAll: async (req, res) => {
-    const { url, method } = req;
-    console.log('Welcome to COVID Estimator API Endpoint!');
-
+    const { method, url } = req;
     const result = await Estimate.list();
-    getTime(url, method);
+    // console.log(result);
+    console.log(req.comment);
+    getTime(method, url);
 
-    res.json({
-      status: 200,
+    res.status(200).json({
       count: result.length,
       result,
-      message: 'Welcome to COVID Estimator API Endpoint!',
     });
   },
 
   addRecord: async (req, res) => {
-    const { url, method } = req;
-    console.log(url, method);
+    const { method, url } = req;
+    console.log(method, url);
     const {
       name, avgAge, avgDailyIncomeInUSD, avgDailyIncomePopulation,
     } = req.body.region;
@@ -54,19 +52,17 @@ const EstimateCtrl = {
     const savedEstimate = await newEstimate.save();
 
     const output = covid19ImpactEstimator(req.body);
-    getTime(url, method);
+    getTime(method, url);
 
-    return res.json({
-      status: 200,
+    return res.status(200).json({
       output,
-      message: 'Welcome to COVID Estimator API Endpoint!',
     });
   },
 
   addRecordXML: async (req, res) => {
-    const { url, method, params } = req;
+    const { method, url, params } = req;
     const { tag } = req.params;
-    console.log(url, method, params);
+    console.log(method, url, params);
     const {
       name, avgAge, avgDailyIncomeInUSD, avgDailyIncomePopulation,
     } = req.body.region;
@@ -79,32 +75,31 @@ const EstimateCtrl = {
     const output = covid19ImpactEstimator(req.body);
     const xmlOutput = toXml(output);
 
-    // getTime(url, method);
     if (tag === 'xml') {
-      getTime(url, method);
+      getTime(method, url);
       return res.format({
         'application/xml': () => res.send(xmlOutput),
       });
     }
     if (tag === 'json') {
-      getTime(url, method);
+      getTime(method, url);
       return res.format({
         'application/json': () => res.send(output),
       });
     }
-    getTime(url, method, 404);
+    getTime(method, url, 404);
     return res.send('Only json and xml response formats are allowed!');
   },
 
   getLogs: (req, res) => {
-    const { url, method } = req;
-    console.log(url, method);
-    let rooturl = __dirname.replace('\\src\\controllers', '');
+    const { method, url } = req;
+    console.log(method, url);
+    let rootUrl = __dirname.replace('\\src\\controllers', '');
     if (process.env.NODE_ENV === 'production') {
-      rooturl = '/app';
+      rootUrl = '/app';
     }
     const options = {
-      root: rooturl,
+      root: rootUrl,
       headers: {
         'Content-Type': 'text/plain',
       },
@@ -125,26 +120,25 @@ const EstimateCtrl = {
   },
 
   setUp: (req, res) => {
-    const { url, method } = req;
+    const { method, url } = req;
     setupDB().then((a) => console.log('Test DB setup'));
 
-    getTime(url, method);
+    getTime(method, url);
 
-    res.json({
-      status: 200,
+    res.status(200).json({
       message: 'Database setup!',
     });
   },
 
   getHome: (req, res) => {
-    const { url, method } = req;
+    const { method, url } = req;
 
-    getTime(url, method);
+    getTime(method, url);
 
-    res.json({
-      status: 200,
+    res.status(200).json({
       message: 'Welcome to COVID Estimator App!',
     });
+    // res.status(200).sendFile(path.join(__dirname, '../../index.html'));
   },
 };
 
