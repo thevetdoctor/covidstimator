@@ -54,9 +54,7 @@ const EstimateCtrl = {
     const output = covid19ImpactEstimator(req.body);
     getTime(method, url);
 
-    return res.status(200).json({
-      output,
-    });
+    return res.status(200).send(output);
   },
 
   addRecordXML: async (req, res) => {
