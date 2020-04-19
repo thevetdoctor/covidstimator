@@ -115,6 +115,7 @@ const EstimateCtrl = {
       } else {
         console.log(options.root);
         console.log('File rendered!');
+        res.end();
       }
     });
   },
