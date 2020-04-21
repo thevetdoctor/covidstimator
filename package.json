@@ -6,9 +6,9 @@
   "private": false,
   "scripts": {
     "lint": "eslint ./src/",
-    "start": "node ./src/server.js",
-    "dev": "nodemon ./src/server.js",
-    "test": "jest --detectOpenHandles"
+    "start": "node ./src/serverListen.js",
+    "dev": "nodemon ./src/serverListen.js",
+    "test": "set NODE_ENV=test&& jest --detectOpenHandles"
   },
   "dependencies": {
     "babel-cli": "^6.26.0",

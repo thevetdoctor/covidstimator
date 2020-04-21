@@ -33,7 +33,7 @@ const EstimateCtrl = {
     console.log(req.comment);
     getTime(method, url);
 
-    res.status(200).json({
+    return res.status(200).json({
       count: result.length,
       result,
     });
@@ -102,19 +102,18 @@ const EstimateCtrl = {
         'Content-Type': 'text/plain',
       },
     };
-    res.sendFile('logs.txt', options, (err) => {
+    return res.sendFile('logs.txt', options, (err) => {
       if (err) {
         console.log(options.root);
         console.log('File not available yet!');
-        res.json({
+        return res.json({
           status: 404,
           message: 'File not available yet!',
         });
-      } else {
-        console.log(options.root);
-        console.log('File rendered!');
-        res.end();
       }
+      console.log(options.root);
+      console.log('File rendered!');
+      return res.sendFile('logs.txt', options);
     });
   },
 
@@ -124,7 +123,7 @@ const EstimateCtrl = {
 
     getTime(method, url);
 
-    res.status(200).json({
+    return res.status(200).json({
       message: 'Database setup!',
     });
   },

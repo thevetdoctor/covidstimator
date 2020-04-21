@@ -54,5 +54,4 @@ class Estimate {
   }
 }
 
-
 module.exports = Estimate;

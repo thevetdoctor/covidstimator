@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-/* eslint-disable no-unused-vars */
 const db = require('./index.js');
 
 const estimateTable = `create table if not exists
@@ -20,7 +19,7 @@ const tables = `${estimateTable}`;
 
 const createTables = async () => {
   const res = await db.query(tables)
-    .then((result) => {
+    .then(() => {
       console.log('Tables created');
     })
     .catch((err) => console.log(err));
@@ -32,7 +31,7 @@ const dropQuery = 'DROP TABLE IF EXISTS estimates';
 
 const dropTables = async () => {
   const res = await db.query(dropQuery)
-    .then((result) => {
+    .then(() => {
       console.log('Tables dropped');
     })
     .catch((err) => console.log(err));
@@ -41,8 +40,8 @@ const dropTables = async () => {
 
 const setupDB = async () => {
   try {
-    const drop = await dropTables();
-    const create = await createTables();
+    await dropTables();
+    await createTables();
   } catch (err) {
     console.log('Error found', err);
   }
