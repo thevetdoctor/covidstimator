@@ -60,7 +60,7 @@ test('Testing API endpoint for json response type', async (done) => {
 test('Testing logs endpoint', async (done) => {
   console.log('Test4!');
   const res = await request.get('/api/v1/on-covid-19/logs');
-  console.log(res.type, res.text);
+  console.log('response type: ',res.type);
   expect(res.text).toBeTruthy();
   done();
 });
@@ -71,8 +71,15 @@ test('Testing home endpoint', async (done) => {
   expect(res.body).toBeTruthy();
   done();
 });
-test('Testing truthy/falsy', () => {
+test('Testing API endpoint after POST requests', async (done) => {
   console.log('Test6!');
+  const res = await request.get('/api/v1/on-covid-19');
+  console.log(res.body);
+  expect(res.body).toBeTruthy();
+  done();
+});
+test('Testing truthy/falsy', () => {
+  console.log('Test7!');
   expect(2 + 2).toBeTruthy();
   expect(2 * 0).toBeFalsy();
 });

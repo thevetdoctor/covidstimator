@@ -27,3 +27,8 @@
 1587430322946		POST		/api/v1/on-covid-19/xml		200		done in 2307 seconds
 1587430323174		POST		/api/v1/on-covid-19/json	200		done in 2527 seconds
 1587430323905		GET		/		200		done in 3259 seconds
+1587430864454		GET		/api/v1/on-covid-19		200		done in 3170 seconds
+1587430865464		POST		/api/v1/on-covid-19/xml		200		done in 4174 seconds
+1587430866272		GET		/		200		done in 4994 seconds
+1587430865727		POST		/api/v1/on-covid-19/json	200		done in 4451 seconds
+1587430866463		GET		/api/v1/on-covid-19		200		done in 5179 seconds
