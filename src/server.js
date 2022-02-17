@@ -9,7 +9,7 @@ dotenv.config();
 const router = require('./routes/route.js');
 
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 4000;
 
 app.use(cors());
 app.use(parser.json());

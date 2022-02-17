@@ -22,3 +22,5 @@
 1587304604433		GET		/api/v1/on-covid-19/		200		done in 12181 seconds
 1587304610026		POST		/api/v1/on-covid-19		200		done in 17771 seconds
 1587304612448		GET		/api/v1/on-covid-19/		200		done in 20193 seconds
+1621348718585		GET		/		200		done in 14514 seconds
+1621351140542		GET		/setup		200		done in 2436471 seconds
